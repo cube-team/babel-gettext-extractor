@@ -24,7 +24,7 @@ var DEFAULT_HEADERS = {
 function getTranslatorComment(node) {
   var comments = [];
   (node.leadingComments || []).forEach(function(commentNode) {
-    var match = commentNode.value.match(/^\s*translators:\s*(.*?)\s*$/im);
+    var match = commentNode.value.match(/^\s*translators,\s*(.*?)\s*$/im);
     if (match) {
       comments.push(match[1]);
     }
