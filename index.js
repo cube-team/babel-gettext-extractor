@@ -59,6 +59,7 @@ module.exports = function() {
       var fileName = plugin.opts && plugin.opts.fileName || DEFAULT_FILE_NAME;
       var headers = plugin.opts && plugin.opts.headers || DEFAULT_HEADERS;
       var base = plugin.opts && plugin.opts.baseDirectory;
+      var join = plugins.opts && plugin.opts.join;
       if (base) {
         base = base.match(/^(.*?)\/*$/)[1] + '/';
       }
@@ -75,6 +76,16 @@ module.exports = function() {
           || DEFAULT_HEADERS['plural-forms'];
         headers['content-type'] = headers['content-type']
           || DEFAULT_HEADERS['content-type'];
+      }
+
+      if (join) {
+        try {
+          data = gettextParser.po.parse(
+            fs.openSync(fileName, {encoding: 'utf-8'})
+          )
+        } catch (e) {
+          // Ignore errors opening catalog
+        }
       }
 
       var defaultContext = data.translations.context;
